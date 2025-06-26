@@ -20,6 +20,10 @@ Este projeto permite aos utilizadores **criar o seu próprio mini site pessoal**
 - **CORS**: Flask-CORS
 
 ---
+<h2>Currículo de João Silva</h2> <h3>(exemplo)</h3>
+<p><strong>Profissão:</strong> Web Developer</p>
+<p><strong>Bio:</strong> Apaixonado por programação e design.</p>
+<p><strong>Cor escolhida:</strong> #aabbcc</p>
 
 ## 📷 Preview
 
