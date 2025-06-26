@@ -1,4 +1,4 @@
-﻿# trabalho-est-gio
+﻿# trabalho-estagio
 # ✨ Gerador de Site Pessoal
 
 Este projeto permite aos utilizadores **criar o seu próprio mini site pessoal**, preenchendo um formulário com nome, profissão, biografia e cor de fundo. Ao submeter, o site é gerado dinamicamente e os dados são também enviados por e-mail.
