@@ -24,16 +24,4 @@ Este projeto permite aos utilizadores **criar o seu próprio mini site pessoal**
 <p><strong>Profissão:</strong> Web Developer</p>
 <p><strong>Bio:</strong> Apaixonado por programação e design.</p>
 <p><strong>Cor escolhida:</strong> #aabbcc</p>
-
-## 📷 Preview
-
-![preview do site](./screenshot.png)
-
 ---
-
-## 🧪 Como correr o projeto
-
-### 1. Clonar o repositório
-```bash
-git clone https://github.com/seu-usuario/nome-do-repo.git
-cd nome-do-repo
