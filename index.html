@@ -5,15 +5,97 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gerador de Currículo</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ecf0f1;
+      padding: 40px;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    form {
+      background: #fff;
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #3498db;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      margin-top: 20px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    hr {
+      margin: 50px auto;
+      max-width: 600px;
+    }
+    #site-gerado {
+      max-width: 600px;
+      margin: auto;
+    }
+  </style>
 </head>
 <body>
   <h1>Gerador de Currículo</h1>
 
   <form id="form">
-    <label>Nome: <input type="text" id="nome" required></label><br>
-    <label>Profissão: <input type="text" id="profissao" required></label><br>
-    <label>Bio: <textarea id="bio" required></textarea></label><br>
-    <label>Cor de fundo: <input type="color" id="cor" required></label><br>
+    <label>Nome:
+      <input type="text" id="nome" required>
+    </label>
+
+    <label>Profissão:
+      <input type="text" id="profissao" required>
+    </label>
+
+    <label>Bio:
+      <textarea id="bio" rows="4" required></textarea>
+    </label>
+
+    <label>Cor de fundo:
+      <input type="color" id="cor" value="#ffffff" required>
+    </label>
+
+    <label>Competências:
+      <textarea id="competencias" rows="3"></textarea>
+    </label>
+
+    <label>Experiência:
+      <textarea id="experiencia" rows="3"></textarea>
+    </label>
+
+    <label>Contactos:
+      <textarea id="contactos" rows="2"></textarea>
+    </label>
+
+    <label>Redes Sociais:
+      <textarea id="redes" rows="2"></textarea>
+    </label>
+
     <button type="submit">Gerar Currículo</button>
   </form>
 
