@@ -6,16 +6,28 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   const bio = document.querySelector("#bio").value;
   const cor = document.querySelector("#cor").value;
 
-  const dados = { nome, profissao, bio, cor };
+  // Adicionando os outros campos
+  const competencias = document.querySelector("#competencias").value;
+  const experiencia = document.querySelector("#experiencia").value;
+  const contactos = document.querySelector("#contactos").value;
+  const redes = document.querySelector("#redes").value;
 
-  // Envia para o backend
+  // Criando FormData para enviar todos os dados, incluindo o arquivo de foto
+  const formData = new FormData();
+  formData.append("nome", nome);
+  formData.append("profissao", profissao);
+  formData.append("bio", bio);
+  formData.append("cor", cor);
+  formData.append("competencias", competencias);
+  formData.append("experiencia", experiencia);
+  formData.append("contactos", contactos);
+  formData.append("redes", redes);
+  formData.append("foto", document.querySelector("#foto").files[0]);
+
   try {
     const res = await fetch("http://127.0.0.1:5000/enviar", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(dados)
+      body: formData
     });
 
     const resposta = await res.json();
