@@ -11,6 +11,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from io import BytesIO
 from flask_cors import CORS
+import pdfkit
 
 app = Flask(__name__)
 CORS(app)
@@ -137,3 +138,17 @@ def enviar():
 
 if __name__ == "__main__":
     app.run(debug=False)
+
+
+def gerar_pdf_html(html_content):
+    # Caminho completo para o wkhtmltopdf
+    path_wkhtmltopdf = r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
+    config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
+
+    # Gera o PDF a partir do HTML em memória
+    pdf = pdfkit.from_string(html_content, False, configuration=config)
+
+    return BytesIO(pdf)
+
+    pdf = pdfkit.from_string(html_content, False)
+    return BytesIO(pdf)
