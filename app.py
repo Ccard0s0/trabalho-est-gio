@@ -20,7 +20,7 @@ EMAIL_PASSWORD = "vsww gdcz dxnl yzyi"  # senha de app do Gmail
 EMAIL_TO = "cardoso200614@gmail.com"
 
 # Função para gerar um design de PDF mais elegante
-def gerar_pdf(nome, profissao, bio, cor):
+def gerar_pdf(nome, profissao, bio, cor, competencias, experiencia, formacao, projectos, contactos, idiomas, redes):
     buffer = BytesIO()
     
     # Criar o PDF com SimpleDocTemplate e usar Paragraphs para formatação
@@ -58,7 +58,28 @@ def gerar_pdf(nome, profissao, bio, cor):
     # Cor escolhida - destacada com um fundo
     color_box_style = ParagraphStyle('ColorBox', parent=styles['Normal'], fontSize=12, alignment=1)
     elements.append(Paragraph(f"<b>Cor escolhida:</b> <font color='{cor}'>{cor}</font>", color_box_style))
+
+    # Competências
+    elements.append(Paragraph(f"<strong>Competências:</strong> {competencias}", text_style))
     
+    # Experiência
+    elements.append(Paragraph(f"<strong>Experiência:</strong> {experiencia}", text_style))
+    
+    # Formação
+    elements.append(Paragraph(f"<strong>Formação:</strong> {formacao}", text_style))
+    
+    # Projetos
+    elements.append(Paragraph(f"<strong>Projetos:</strong> {projectos}", text_style))
+    
+    # Contactos
+    elements.append(Paragraph(f"<strong>Contactos:</strong> {contactos}", text_style))
+    
+    # Idiomas
+    elements.append(Paragraph(f"<strong>Idiomas:</strong> {idiomas}", text_style))
+    
+    # Redes Sociais
+    elements.append(Paragraph(f"<strong>Redes Sociais:</strong> {redes}", text_style))
+
     # Finalizando o conteúdo
     doc.build(elements)
     buffer.seek(0)
@@ -67,21 +88,34 @@ def gerar_pdf(nome, profissao, bio, cor):
 
 @app.route("/enviar", methods=["POST"])
 def enviar():
-    data = request.json
+    dados = request.form  # Obtém os dados do formulário
+    nome = dados.get("nome")
+    profissao = dados.get("profissao")
+    bio = dados.get("bio")
+    cor = dados.get("cor")
+    competencias = dados.get("competencias")
+    experiencia = dados.get("experiencia")
+    formacao = dados.get("formacao")
+    projectos = dados.get("projectos")
+    contactos = dados.get("contactos")
+    idiomas = dados.get("idiomas")
+    redes = dados.get("redes")
 
-    nome = data.get("nome")
-    profissao = data.get("profissao")
-    bio = data.get("bio")
-    cor = data.get("cor")
+    if not nome or not profissao or not bio or not cor:
+        return jsonify({"error": "Dados incompletos."}), 400
 
     # Gerar o PDF com os dados
-    pdf_buffer = gerar_pdf(nome, profissao, bio, cor)
+    pdf_buffer = gerar_pdf(nome, profissao, bio, cor, competencias, experiencia, formacao, projectos, contactos, idiomas, redes)
 
     # Cria o e-mail
     msg = MIMEMultipart()
     msg["From"] = EMAIL_FROM
     msg["To"] = EMAIL_TO
     msg["Subject"] = f"Novo currículo enviado por {nome}"
+
+    # Adiciona o corpo do e-mail
+    body = f"Currículo enviado por {nome}. Abaixo estão as informações fornecidas:\n\nNome: {nome}\nProfissão: {profissao}\nBio: {bio}\nCor escolhida: {cor}\nCompetências: {competencias}\nExperiência: {experiencia}\nFormação: {formacao}\nProjetos: {projectos}\nContactos: {contactos}\nIdiomas: {idiomas}\nRedes Sociais: {redes}"
+    msg.attach(MIMEText(body, "plain"))
 
     # Anexar o PDF ao e-mail
     part = MIMEBase("application", "octet-stream")
@@ -102,4 +136,4 @@ def enviar():
         return jsonify({"error": "Erro ao enviar e-mail"}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)

@@ -2,52 +2,58 @@
 <html lang="pt">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gerador de Site Pessoal e Currículo</title>
+  <title>Gerador de Currículo</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <h1>Gerador de Site Pessoal</h1>
+  <main class="pagina">
+    <form id="curriculo-form">
+      <h1>Preenche o teu currículo</h1>
 
-  <form id="form">
-    <label>Nome: <input type="text" id="nome" required></label><br>
+      <label>Nome</label>
+      <input type="text" id="nome" required />
 
-    <label>Profissão:
-      <input type="text" id="profissao" required>
-    </label>
+      <label>Profissão</label>
+      <input type="text" id="profissao" required />
 
-    <label>Bio:
-      <textarea id="bio" rows="4" required></textarea>
-    </label>
+      <label>Bio</label>
+      <textarea id="bio" required></textarea>
 
-    <label>Competências:
-      <textarea id="competencias" rows="3"></textarea>
-    </label>
+      <label>Competências (separa por vírgulas)</label>
+      <textarea id="competencias" required></textarea>
 
-    <label>Experiência:
-      <textarea id="experiencia" rows="3"></textarea>
-    </label>
+      <label>Experiência (usa o formato: Cargo - Empresa - Datas - Descrição)</label>
+      <textarea id="experiencia" required></textarea>
 
-    <label>Contactos:
-      <textarea id="contactos" rows="2"></textarea>
-    </label>
+      <label>Formação (Curso - Escola - Datas)</label>
+      <textarea id="formacao" required></textarea>
 
-    <label>Redes Sociais:
-      <textarea id="redes" rows="2"></textarea>
-    </label>
+      <label>Projectos (Nome - Descrição)</label>
+      <textarea id="projectos"></textarea>
 
-    <label>Cor de fundo:
-      <input type="color" id="cor" value="#ffffff" required>
-    </label>
-    
-    <label>Foto:Add commentMore actions
-      <input type="file" id="foto" name="foto" accept="image/*" required>
-    </label>
+      <label>Contactos (Email, Telemóvel, Localização)</label>
+      <textarea id="contactos" required></textarea>
 
-    <button type="submit">Gerar Currículo</button>
-  </form>
+      <label>Idiomas (ex: Português - Nativo, Inglês - Intermédio)</label>
+      <textarea id="idiomas"></textarea>
+
+      <label>Redes Sociais (ex: LinkedIn: link, GitHub: link)</label>
+      <textarea id="redes" required></textarea>
+
+      <label>Cor do destaque</label>
+      <input type="color" id="cor" value="#000000" />
+      <label>Foto</label>
+      <input type="file" id="foto" accept="image/*" />
+
+      <button type="submit">Gerar Currículo</button>
+    </form>
+
+    <!-- Onde será injetado o currículo com o estilo do Canva -->
+    <section id="site-gerado" class="cv-preview"></section>
+  </main>
 
   <script src="script.js"></script>
 </body>

@@ -1,3 +1,4 @@
+
 * {
   margin: 0;
   padding: 0;
@@ -5,112 +6,143 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f4f9;
-  color: #333;
-  padding: 40px;
-  margin: 0;
+  font-family: 'Helvetica', sans-serif;
+  background-color: #f4f4f4;
+  padding: 20px;
+  color: #000;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #2c3e50;
+.pagina {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
 }
 
 form {
-  max-width: 600px;
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
-}
-
-form label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-form input[type="text"],
-form textarea,
-form input[type="color"] {
   width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  margin-bottom: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  transition: 0.3s;
-}
-
-form input[type="text"]:focus,
-form textarea:focus {
-  border-color: #3498db;
-  outline: none;
-}
-
-textarea {
-  resize: vertical;
-  height: 80px;
-  border-radius: 4px;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #2c3e50;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #34495e;
-}
-
-#site-gerado {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  background-color: white;
-}
-
-.curriculo-container {
-  background-color: #fff;
+  max-width: 700px;
+  background: #fff;
   padding: 20px;
+  margin-bottom: 40px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.curriculo-container h2 {
-  color: #2c3e50;
+form h1 {
+  margin-bottom: 20px;
+}
+
+form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+form input,
+form textarea,
+form select {
+  width: 100%;
+  margin-top: 5px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cv-preview {
+  width: 210mm;
+  height: 297mm;
+  background-color: #fff;
+  display: flex;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  page-break-after: always;
+  margin: 20 auto;
+}
+
+.left-column {
+  background-color: #000;
+  color: #fff;
+  width: 35%;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-column img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+.left-column h1 {
+  font-size: 22px;
   text-align: center;
 }
 
-.curriculo-container .info {
-  background-color: #fafafa;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+.left-column p {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.left-column .section h2 {
+  font-size: 14px;
+  text-transform: uppercase;
   margin-bottom: 10px;
+  border-bottom: 1px solid #fff;
+  padding-bottom: 5px;
 }
 
-.curriculo-container .info p {
-  margin: 5px 0;
-  color: #555;
+.left-column .section ul {
+  list-style: none;
+  padding: 0;
+  font-size: 13px;
 }
 
-.color-box {
+.right-column {
+  width: 65%;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-column h2 {
+  font-size: 14px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #000;
+  padding-bottom: 4px;
+}
+
+.right-column p {
+  font-size: 14px;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.section ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.barra-cor {
+  height: 8px;
   width: 100%;
-  height: 20px;
-  margin-top: 10px;
-  border-radius: 4px;
 }
