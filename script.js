@@ -42,20 +42,6 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   }
 
   async function gerarCurriculo() {
-    try {
-      const res = await fetch("http://127.0.0.1:5000/enviar", {
-        method: "POST",
-        body: formData,
-      });
-
-      const resposta = await res.json();
-      alert(resposta.message || resposta.error);
-    } catch (error) {
-      console.error("Erro ao enviar para o servidor:", error);
-      alert("Erro ao enviar para o servidor.");
-    }
-
-    // Geração visual
     const siteGerado = document.querySelector("#site-gerado");
     const fotoHTML = foto_base64
       ? `<img src="${foto_base64}" alt="Foto" />`
@@ -112,5 +98,21 @@ document.querySelector("form").addEventListener("submit", async (e) => {
         </div>
       </div>
     `;
+
+    // Adiciona o HTML renderizado ao formData
+    formData.append("curriculo_html", siteGerado.innerHTML);
+
+    try {
+      const res = await fetch("http://127.0.0.1:5000/enviar", {
+        method: "POST",
+        body: formData,
+      });
+
+      const resposta = await res.json();
+      alert(resposta.message || resposta.error);
+    } catch (error) {
+      console.error("Erro ao enviar para o servidor:", error);
+      alert("Erro ao enviar para o servidor.");
+    }
   }
 });
