@@ -27,9 +27,8 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   formData.append("redes", redes);
 
   const fotoFile = document.querySelector("#foto").files[0];
-  if (fotoFile) formData.append("foto", fotoFile);
-
   let foto_base64 = "";
+
   if (fotoFile) {
     const reader = new FileReader();
     reader.onload = () => {
@@ -99,7 +98,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
       </div>
     `;
 
-    // Adiciona o HTML renderizado ao formData
+    // Adiciona o HTML gerado ao formData
     formData.append("curriculo_html", siteGerado.innerHTML);
 
     try {
@@ -115,4 +114,15 @@ document.querySelector("form").addEventListener("submit", async (e) => {
       alert("Erro ao enviar para o servidor.");
     }
   }
+  document.querySelector("#guardar-imagem").addEventListener("click", () => {
+  const areaCurriculo = document.querySelector("#site-gerado");
+
+  html2canvas(areaCurriculo).then((canvas) => {
+    const link = document.createElement("a");
+    link.download = "curriculo.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  });
+});
+
 });

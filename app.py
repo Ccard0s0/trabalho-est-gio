@@ -1,70 +1,66 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import smtplib
-from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
 from email import encoders
-from io import BytesIO
-from flask_cors import CORS
 import pdfkit
+from io import BytesIO
+import os
 
 app = Flask(__name__)
 CORS(app)
 
 EMAIL_FROM = "cardoso200614@gmail.com"
-EMAIL_PASSWORD = "vsww gdcz dxnl yzyi"
+EMAIL_PASSWORD = "vsww gdcz dxnl yzyi"  # senha de app do Gmail
 EMAIL_TO = "cardoso200614@gmail.com"
 
-# Função para gerar o PDF com visual renderizado
+# 🧠 Gera PDF a partir do HTML (com CSS aplicado)
 def gerar_pdf_html(html_content):
     path_wkhtmltopdf = r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
     config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
 
     options = {
-        'enable-local-file-access': None,
         'encoding': "UTF-8",
+        'enable-local-file-access': None
     }
 
-    pdf = pdfkit.from_string(html_content, False, configuration=config, options=options)
+    # Caminho para o CSS (caminho absoluto completo)
+    caminho_css = os.path.abspath("css/style.css")
+
+    # Gera o PDF com o CSS aplicado
+    pdf = pdfkit.from_string(html_content, False, configuration=config, css=caminho_css, options=options)
     return BytesIO(pdf)
 
 @app.route("/enviar", methods=["POST"])
 def enviar():
-    dados = request.form
+    html_content = request.form.get("html")
 
-    nome = dados.get("nome")
-    profissao = dados.get("profissao")
-    bio = dados.get("bio")
-    cor = dados.get("cor")
-    competencias = dados.get("competencias")
-    experiencia = dados.get("experiencia")
-    formacao = dados.get("formacao")
-    projectos = dados.get("projectos")
-    contactos = dados.get("contactos")
-    idiomas = dados.get("idiomas")
-    redes = dados.get("redes")
-    curriculo_html = dados.get("curriculo_html")
-
-    if not nome or not profissao or not bio or not cor or not curriculo_html:
-        return jsonify({"error": "Dados incompletos."}), 400
+    if not html_content:
+        return jsonify({"error": "HTML não fornecido."}), 400
 
     try:
-        pdf_buffer = gerar_pdf_html(curriculo_html)
+        # Gerar PDF
+        pdf_buffer = gerar_pdf_html(html_content)
 
+        # Criar o e-mail
         msg = MIMEMultipart()
         msg["From"] = EMAIL_FROM
         msg["To"] = EMAIL_TO
-        msg["Subject"] = f"Novo currículo enviado por {nome}"
+        msg["Subject"] = "Novo currículo com estilo visual"
 
-        body = f"Currículo enviado por {nome}."
-        msg.attach(MIMEText(body, "plain"))
+        # Corpo do e-mail
+        msg.attach(MIMEText("Segue em anexo o currículo gerado com o estilo visual.", "plain"))
 
+        # Anexar o PDF
         part = MIMEBase("application", "octet-stream")
         part.set_payload(pdf_buffer.read())
         encoders.encode_base64(part)
-        part.add_header("Content-Disposition", f"attachment; filename=curriculo.pdf")
+        part.add_header("Content-Disposition", "attachment; filename=curriculo.pdf")
         msg.attach(part)
 
+        # Enviar
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(EMAIL_FROM, EMAIL_PASSWORD)
             server.sendmail(EMAIL_FROM, EMAIL_TO, msg.as_string())
@@ -73,7 +69,7 @@ def enviar():
 
     except Exception as e:
         print("Erro:", e)
-        return jsonify({"error": "Erro ao enviar e-mail"}), 500
+        return jsonify({"error": "Erro ao gerar ou enviar o PDF"}), 500
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
