@@ -12,9 +12,9 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-EMAIL_FROM = "cardoso200614@gmail.com"
-EMAIL_PASSWORD = "vsww gdcz dxnl yzyi"  # senha de app do Gmail
-EMAIL_TO = "cardoso200614@gmail.com"
+EMAIL_FROM = os.environ.get("EMAIL_FROM")
+EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
+EMAIL_TO = os.environ.get("EMAIL_TO")
 
 # 🧠 Gera PDF a partir do HTML (com CSS aplicado)
 def gerar_pdf_html(html_content):
