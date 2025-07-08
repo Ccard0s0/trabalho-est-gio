@@ -27,7 +27,7 @@ def gerar_pdf_html(html_content):
     }
 
     # Caminho para o CSS (caminho absoluto completo)
-    caminho_css = os.path.abspath("css/style.css")
+    caminho_css = os.path.abspath("style.css")
 
     # Gera o PDF com o CSS aplicado
     pdf = pdfkit.from_string(html_content, False, configuration=config, css=caminho_css, options=options)
@@ -35,7 +35,7 @@ def gerar_pdf_html(html_content):
 
 @app.route("/enviar", methods=["POST"])
 def enviar():
-    html_content = request.form.get("html")
+    html_content = request.form.get("curriculo_html")
 
     if not html_content:
         return jsonify({"error": "HTML não fornecido."}), 400

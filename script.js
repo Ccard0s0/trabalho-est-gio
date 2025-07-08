@@ -101,6 +101,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     // Adiciona o HTML gerado ao formData
     formData.append("curriculo_html", siteGerado.innerHTML);
 
+    // Enviar para backend
     try {
       const res = await fetch("http://127.0.0.1:5000/enviar", {
         method: "POST",
@@ -113,16 +114,18 @@ document.querySelector("form").addEventListener("submit", async (e) => {
       console.error("Erro ao enviar para o servidor:", error);
       alert("Erro ao enviar para o servidor.");
     }
+
+    // Evento do botão de guardar imagem
+    const botaoImagem = document.querySelector("#guardar-imagem");
+    if (botaoImagem) {
+      botaoImagem.addEventListener("click", () => {
+        html2canvas(siteGerado).then((canvas) => {
+          const link = document.createElement("a");
+          link.download = "curriculo.png";
+          link.href = canvas.toDataURL("image/png");
+          link.click();
+        });
+      });
+    }
   }
-  document.querySelector("#guardar-imagem").addEventListener("click", () => {
-  const areaCurriculo = document.querySelector("#site-gerado");
-
-  html2canvas(areaCurriculo).then((canvas) => {
-    const link = document.createElement("a");
-    link.download = "curriculo.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-  });
-});
-
 });
