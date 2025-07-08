@@ -1,0 +1,38 @@
+/* CSS exclusivo para PDF do currículo - fundo sempre branco */
+
+body, .cv-preview {
+  background: #fff !important;
+  color: #000 !important;
+}
+
+.left-column {
+  background: var(--cor-destaque, #000) !important;
+  color: #fff !important;
+}
+
+.right-column {
+  background: #fff !important;
+  color: #000 !important;
+}
+
+/* Remove sombras, gradientes e bordas desnecessárias para PDF */
+.cv-preview, .right-column, .left-column {
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Garante que não há tons de creme/bege no PDF */
+form, .pagina, .section, .barra-cor {
+  background: transparent !important;
+}
+
+/* Ajusta botões para não aparecerem no PDF */
+button, #label-foto, #label-cor, #guardar-imagem, input[type="file"], input[type="color"] {
+  display: none !important;
+}
+
+/* Ajusta fontes e espaçamentos para PDF */
+.cv-preview, .left-column, .right-column {
+  font-family: 'Helvetica', Arial, sans-serif;
+  font-size: 14px;
+}

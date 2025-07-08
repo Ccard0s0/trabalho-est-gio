@@ -46,9 +46,12 @@ document.querySelector("form").addEventListener("submit", async (e) => {
       ? `<img src="${foto_base64}" alt="Foto" />`
       : "";
 
+    // Atualiza a cor do lado esquerdo do currículo
+    siteGerado.style.setProperty('--cor-destaque', cor);
+
     siteGerado.innerHTML = `
       <div class="cv-preview">
-        <div class="left-column" style="background-color: ${cor};">
+        <div class="left-column">
           ${fotoHTML}
           <h1>${nome}</h1>
           <p>${profissao}</p>
@@ -99,7 +102,34 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     `;
 
     // Adiciona o HTML gerado ao formData
-    formData.append("curriculo_html", siteGerado.innerHTML);
+    // Antes de enviar, aplica a cor de destaque inline na left-column e remove qualquer style da cv-preview
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(siteGerado.innerHTML, 'text/html');
+    const leftColumn = doc.querySelector('.left-column');
+    if (leftColumn) {
+      leftColumn.setAttribute('style', `background-color: ${cor} !important; color: #fff !important; width:35%; height:297mm; min-height:297mm; padding:30px; display:flex; flex-direction:column; justify-content:flex-start; align-items:center;`);
+    }
+    const rightColumn = doc.querySelector('.right-column');
+    if (rightColumn) {
+      rightColumn.setAttribute('style', 'background: #fff !important; color: #000 !important; width:65%; height:297mm; min-height:297mm; padding:30px; display:flex; flex-direction:column; justify-content:flex-start;');
+      // Força o texto a ficar preto
+      Array.from(rightColumn.querySelectorAll('*')).forEach(el => {
+        el.setAttribute('style', (el.getAttribute('style') || '') + 'color:#000 !important;background:transparent !important;');
+      });
+    }
+    const cvPreview = doc.querySelector('.cv-preview');
+    if (cvPreview) {
+      cvPreview.setAttribute('style', 'width:210mm; height:297mm; display:flex; box-shadow:none; overflow:hidden; page-break-after:always;');
+    }
+    // Garante que a foto aparece corretamente
+    const img = doc.querySelector('.left-column img');
+    if (img && foto_base64) {
+      img.setAttribute('src', foto_base64);
+      img.setAttribute('style', 'width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:20px; display:block;');
+    }
+    // Loga o HTML que será enviado ao backend para facilitar depuração
+    console.log('HTML enviado ao backend (curriculo_html):', doc.body.innerHTML);
+    formData.append("curriculo_html", doc.body.innerHTML);
 
     // Enviar para backend
     try {
@@ -127,5 +157,33 @@ document.querySelector("form").addEventListener("submit", async (e) => {
         });
       });
     }
+  }
+
+  // Mostrar nome do ficheiro escolhido para foto
+  const inputFoto = document.getElementById('foto');
+  const nomeFicheiro = document.getElementById('nome-ficheiro');
+  if (inputFoto && nomeFicheiro) {
+    inputFoto.addEventListener('change', function() {
+      const nome = this.files[0] ? this.files[0].name : '';
+      nomeFicheiro.textContent = nome;
+    });
+  }
+
+  // Botão de cor de destaque com cor dinâmica
+  const inputCor = document.getElementById('cor');
+  const labelCor = document.getElementById('label-cor');
+  if (inputCor && labelCor) {
+    function atualizarCorBotao() {
+      labelCor.style.background = inputCor.value;
+      // Ajusta a cor do texto para branco ou preto conforme contraste
+      const cor = inputCor.value.replace('#', '');
+      const r = parseInt(cor.substr(0,2),16);
+      const g = parseInt(cor.substr(2,2),16);
+      const b = parseInt(cor.substr(4,2),16);
+      const luminancia = (0.299*r + 0.587*g + 0.114*b)/255;
+      labelCor.style.color = luminancia > 0.5 ? '#000' : '#fff';
+    }
+    inputCor.addEventListener('input', atualizarCorBotao);
+    atualizarCorBotao();
   }
 });

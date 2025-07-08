@@ -26,10 +26,10 @@ def gerar_pdf_html(html_content):
         'enable-local-file-access': None
     }
 
-    # Caminho para o CSS (caminho absoluto completo)
-    caminho_css = os.path.abspath("style.css")
+    # Caminho para o CSS do PDF (pdf_style.css)
+    caminho_css = os.path.abspath("pdf_style.css")
 
-    # Gera o PDF com o CSS aplicado
+    # Gera o PDF com o CSS do PDF aplicado
     pdf = pdfkit.from_string(html_content, False, configuration=config, css=caminho_css, options=options)
     return BytesIO(pdf)
 

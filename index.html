@@ -15,55 +15,55 @@
     <form id="curriculo-form">
       <h1>Preenche o teu currículo</h1>
 
-      <label>Nome</label>
-      <input type="text" id="nome" required />
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" name="nome" required placeholder="Nome Completo" title="Nome" />
 
-      <label>Profissão</label>
-      <input type="text" id="profissao" required />
+      <label for="profissao">Profissão</label>
+      <input type="text" id="profissao" name="profissao" required placeholder="Diga a sua profissão atual" title="Profissão" />
 
-      <label>Bio</label>
-      <textarea id="bio" required></textarea>
+      <label for="bio">Bio</label>
+      <textarea id="bio" name="bio" required placeholder="Fale um pouco sobre si" title="Bio"></textarea>
 
-      <label>Competências (separa por vírgulas)</label>
-      <textarea id="competencias" required></textarea>
+      <label for="competencias">Competências (separa por vírgulas)</label>
+      <textarea id="competencias" name="competencias" required placeholder="Ex: HTML, CSS, JavaScript" title="Competências"></textarea>
 
-      <label>Experiência (usa o formato: Cargo - Empresa - Datas - Descrição)</label>
-      <textarea id="experiencia" required></textarea>
+      <label for="experiencia">Experiência (usa o formato: Cargo - Empresa - Datas - Descrição)</label>
+      <textarea id="experiencia" name="experiencia" required placeholder="Ex: Dev - Empresa - 2020-2022 - Atividades" title="Experiência"></textarea>
 
-      <label>Formação (Curso - Escola - Datas)</label>
-      <textarea id="formacao" required></textarea>
+      <label for="formacao">Formação (Curso - Escola - Datas)</label>
+      <textarea id="formacao" name="formacao" required placeholder="Ex: Engenharia - Faculdade - 2018-2022" title="Formação"></textarea>
 
-      <label>Projectos (Nome - Descrição)</label>
-      <textarea id="projectos"></textarea>
+      <label for="projectos">Projectos (Nome - Descrição)</label>
+      <textarea id="projectos" name="projectos" placeholder="Ex: App X - Descrição" title="Projetos"></textarea>
 
-      <label>Contactos (Email, Telemóvel, Localização)</label>
-      <textarea id="contactos" required></textarea>
+      <label for="contactos">Contactos (Email, Telemóvel, Localização)</label>
+      <textarea id="contactos" name="contactos" required placeholder="Ex: email@exemplo.com, 99999-9999, Cidade" title="Contactos"></textarea>
 
-      <label>Idiomas (ex: Português - Nativo, Inglês - Intermédio)</label>
-      <textarea id="idiomas"></textarea>
+      <label for="idiomas">Idiomas (ex: Português - Nativo, Inglês - Intermédio)</label>
+      <textarea id="idiomas" name="idiomas" placeholder="Ex: Português - Nativo" title="Idiomas"></textarea>
 
-      <label>Redes Sociais (ex: LinkedIn: link, GitHub: link)</label>
-      <textarea id="redes" required></textarea>
+      <label for="redes">Redes Sociais (ex: LinkedIn: link, GitHub: link)</label>
+      <textarea id="redes" name="redes" required placeholder="Ex: LinkedIn: ..." title="Redes Sociais"></textarea>
 
-      <label>Cor do destaque</label>
-      <input type="color" id="cor" value="#000000" />
-      <label>Foto</label>
+      <label for="cor" id="label-cor" style="margin-bottom: 8px;">Escolher Cor de Destaque</label>
+      <input type="color" id="cor" value="#000000" style="display:none;" />
+      <label for="foto" id="label-foto">Escolher Foto</label>
       <input type="file" id="foto" accept="image/*" />
+      <span id="nome-ficheiro"></span>
 
       <button type="submit">Gerar Currículo</button>
+      <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
+        <button id="guardar-imagem"
+          style="padding: 10px 10px; background-color: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">
+          Guardar Currículo como Imagem
+        </button>
+      </div>
     </form>
 
     <!-- Onde será injetado o currículo com o estilo do Canva -->
     <section id="site-gerado" class="cv-preview"></section>
-    <div id="botao-download-container" style="text-align: center; margin-top: 20px;">
-    </div>
+    <div id="botao-download-container" style="text-align: center; margin-top: 50px;"></div>
   </main>
-  <div style="text-align: right;">
-    <button id="guardar-imagem"
-      style="padding: 10px 10px; background-color: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">
-      Guardar Currículo como Imagem
-    </button>
-  </div>
   <script src="script.js"></script>
 </body>
 
