@@ -9,8 +9,9 @@ import pdfkit
 from io import BytesIO
 import os
 
+
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["https://trabalho-est-gio.vercel.app"])
 
 EMAIL_FROM = os.environ.get("EMAIL_FROM")
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
