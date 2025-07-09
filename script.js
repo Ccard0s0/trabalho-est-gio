@@ -133,7 +133,8 @@ document.querySelector("form").addEventListener("submit", async (e) => {
 
     // Enviar para backend
     try {
-      const res = await fetch("http://127.0.0.1:5000/enviar", {
+      // Use a URL pública do seu backend Flask no Render
+      const res = await fetch("https://trabalho-est-gio.onrender.com/enviar", {
         method: "POST",
         body: formData,
       });
