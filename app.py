@@ -9,17 +9,17 @@ import pdfkit
 from io import BytesIO
 import os
 
+# Carregar variáveis de ambiente (em produção deves usar .env)
+EMAIL_FROM = os.getenv("EMAIL_FROM", "cardoso200614@gmail.com")
+EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD", "vsww gdcz dxnl yzyi")  # Usa uma app password
+EMAIL_TO = os.getenv("EMAIL_TO", "cardoso200614@gmail.com")
+CORS_ORIGIN = os.getenv("CORS_ORIGIN", "https://trabalho-est-gio.vercel.app")
 
 app = Flask(__name__)
-CORS(app, origins=["https://trabalho-est-gio.vercel.app"])
+CORS(app, origins=[CORS_ORIGIN])
 
-EMAIL_FROM = os.environ.get("EMAIL_FROM")
-EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
-EMAIL_TO = os.environ.get("EMAIL_TO")
-
-# 🧠 Gera PDF a partir do HTML (com CSS aplicado)
 def gerar_pdf_html(html_content):
-    path_wkhtmltopdf = r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
+    path_wkhtmltopdf = os.getenv("WKHTMLTOPDF_PATH", "/usr/bin/wkhtmltopdf")
     config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
 
     options = {
@@ -27,41 +27,32 @@ def gerar_pdf_html(html_content):
         'enable-local-file-access': None
     }
 
-    # Caminho para o CSS do PDF (pdf_style.css)
     caminho_css = os.path.abspath("pdf_style.css")
-
-    # Gera o PDF com o CSS do PDF aplicado
     pdf = pdfkit.from_string(html_content, False, configuration=config, css=caminho_css, options=options)
     return BytesIO(pdf)
 
 @app.route("/enviar", methods=["POST"])
 def enviar():
     html_content = request.form.get("curriculo_html")
-
     if not html_content:
         return jsonify({"error": "HTML não fornecido."}), 400
 
     try:
-        # Gerar PDF
         pdf_buffer = gerar_pdf_html(html_content)
 
-        # Criar o e-mail
         msg = MIMEMultipart()
         msg["From"] = EMAIL_FROM
         msg["To"] = EMAIL_TO
         msg["Subject"] = "Novo currículo com estilo visual"
 
-        # Corpo do e-mail
         msg.attach(MIMEText("Segue em anexo o currículo gerado com o estilo visual.", "plain"))
 
-        # Anexar o PDF
         part = MIMEBase("application", "octet-stream")
         part.set_payload(pdf_buffer.read())
         encoders.encode_base64(part)
         part.add_header("Content-Disposition", "attachment; filename=curriculo.pdf")
         msg.attach(part)
 
-        # Enviar
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(EMAIL_FROM, EMAIL_PASSWORD)
             server.sendmail(EMAIL_FROM, EMAIL_TO, msg.as_string())
@@ -70,7 +61,7 @@ def enviar():
 
     except Exception as e:
         print("Erro:", e)
-        return jsonify({"error": "Erro ao gerar ou enviar o PDF"}), 500
+        return jsonify({"error": f"Erro ao gerar ou enviar o PDF: {str(e)}"}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
