@@ -130,10 +130,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     // Loga o HTML que será enviado ao backend para facilitar depuração
     console.log('HTML enviado ao backend (curriculo_html):', doc.body.innerHTML);
     formData.append("curriculo_html", doc.body.innerHTML);
-
-    // Enviar para backend
     try {
-      // Use a URL pública do seu backend Flask no Render
       const res = await fetch("https://trabalho-est-gio.onrender.com/enviar", {
         method: "POST",
         body: formData,
@@ -145,8 +142,6 @@ document.querySelector("form").addEventListener("submit", async (e) => {
       console.error("Erro ao enviar para o servidor:", error);
       alert("Erro ao enviar para o servidor.");
     }
-
-    // Evento do botão de guardar imagem
     const botaoImagem = document.querySelector("#guardar-imagem");
     if (botaoImagem) {
       botaoImagem.addEventListener("click", () => {
@@ -160,7 +155,6 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     }
   }
 
-  // Mostrar nome do ficheiro escolhido para foto
   const inputFoto = document.getElementById('foto');
   const nomeFicheiro = document.getElementById('nome-ficheiro');
   if (inputFoto && nomeFicheiro) {
@@ -170,13 +164,11 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     });
   }
 
-  // Botão de cor de destaque com cor dinâmica
   const inputCor = document.getElementById('cor');
   const labelCor = document.getElementById('label-cor');
   if (inputCor && labelCor) {
     function atualizarCorBotao() {
       labelCor.style.background = inputCor.value;
-      // Ajusta a cor do texto para branco ou preto conforme contraste
       const cor = inputCor.value.replace('#', '');
       const r = parseInt(cor.substr(0,2),16);
       const g = parseInt(cor.substr(2,2),16);
